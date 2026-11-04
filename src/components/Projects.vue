@@ -241,6 +241,7 @@ onMounted(() => {
   color: var(--color-text-secondary);
   line-height: 1.7;
   margin: 0;
+  text-align: center;
 }
 
 /* Projects Grid */
@@ -304,7 +305,7 @@ onMounted(() => {
 
 .project-card:hover {
   border-color: var(--color-accent-primary);
-  transform: translateY(-12px) rotateX(2deg);
+  transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(168, 85, 247, 0.35),
               0 0 0 1px rgba(168, 85, 247, 0.1);
 }
@@ -476,7 +477,7 @@ onMounted(() => {
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
-  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.3s ease;
 }
 
 .project-card:hover .project-title {

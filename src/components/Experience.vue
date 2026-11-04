@@ -289,6 +289,7 @@ onMounted(() => {
   color: var(--color-text-secondary);
   line-height: 1.6;
   margin: 0;
+  text-align: center;
 }
 
 /* Filter Buttons */

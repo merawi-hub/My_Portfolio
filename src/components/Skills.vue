@@ -329,6 +329,9 @@ onMounted(() => {
   line-height: 1.6;
   margin: 0;
   max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .section-footer-text {
@@ -336,6 +339,7 @@ onMounted(() => {
   color: var(--color-text-muted);
   font-style: italic;
   margin-top: var(--spacing-xs);
+  text-align: center;
 }
 
 /* Category Filter */
@@ -525,10 +529,11 @@ onMounted(() => {
 .popup-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
   justify-items: center;
+  align-items: center;
 }
 
 /* All Skills Layout - 16 items: 5-6-5 rows */
@@ -560,14 +565,30 @@ onMounted(() => {
 .popup-grid[data-count="7"] .tech-card:nth-child(6) { grid-column: 6 / 8; grid-row: 2; } /* JavaScript - centered */
 .popup-grid[data-count="7"] .tech-card:nth-child(7) { grid-column: 10 / 12; grid-row: 2; } /* Tailwind - under TS/Vue */
 
-/* Backend Layout - 5 items: simple 2-row layout */
-.popup-grid[data-count="5"] .tech-card {
-  grid-column: span 2;
+/* Backend Layout - 5 items: centered 2-row layout */
+.popup-grid[data-count="5"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  max-width: 1000px;
 }
 
-/* Tools Layout - 4 items: simple 2x2 layout */
+.popup-grid[data-count="5"] .tech-card {
+  flex: 0 0 auto;
+}
+
+/* Tools Layout - 4 items: centered 2x2 layout */
+.popup-grid[data-count="4"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  max-width: 700px;
+}
+
 .popup-grid[data-count="4"] .tech-card {
-  grid-column: span 3;
+  flex: 0 0 auto;
 }
 
 .tech-card {
