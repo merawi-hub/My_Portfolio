@@ -18,64 +18,43 @@ interface Project {
 const allProjects = ref<Project[]>([
   {
     id: 1,
-    title: 'E-Commerce Platform',
-    description: 'A full-stack e-commerce application with user authentication, product management, shopping cart, and payment integration using modern web technologies.',
-    image: '/images/project-ecommerce.jpg',
-    tags: ['Vue.js', 'Laravel', 'MySQL', 'Tailwind CSS'],
+    title: 'Online Grocery Delivery App',
+    description: 'A comprehensive online grocery shopping platform with real-time order tracking, payment integration, inventory management, and delivery scheduling system.',
+    image: '/images/project-grocery.jpg',
+    tags: ['Laravel', 'Vue.js', 'MySQL', 'REST API'],
     category: 'fullstack',
-    github: 'https://github.com/yourusername/ecommerce',
-    demo: 'https://demo.ecommerce.com',
+    github: 'https://github.com/merawi-hub/online-grocery-delivery-app',
     featured: true
   },
   {
     id: 2,
-    title: 'Task Management App',
-    description: 'A collaborative task management tool with real-time updates, team collaboration features, and progress tracking for enhanced productivity.',
-    image: '/images/project-taskmanager.jpg',
-    tags: ['React', 'Django', 'PostgreSQL', 'REST API'],
+    title: 'Clinic Appointment Scheduling System',
+    description: 'A healthcare management system for scheduling patient appointments, managing doctor availability, patient records, and automated appointment reminders.',
+    image: '/images/project-clinic.jpg',
+    tags: ['Django', 'Python', 'PostgreSQL', 'Bootstrap'],
     category: 'fullstack',
-    github: 'https://github.com/yourusername/taskmanager',
-    demo: 'https://demo.taskmanager.com',
+    github: 'https://github.com/merawi-hub/clinic-appointment-system',
     featured: true
   },
   {
     id: 3,
-    title: 'Portfolio Website',
-    description: 'A modern, responsive portfolio website with smooth animations, interactive 3D elements, and optimized performance showcasing my work and skills.',
-    image: '/images/project-portfolio.jpg',
-    tags: ['Vue.js', 'TypeScript', 'Vite', 'CSS3'],
-    category: 'frontend',
-    github: 'https://github.com/yourusername/portfolio',
-    demo: 'https://yourportfolio.com',
+    title: 'Task Scheduling Management System',
+    description: 'A collaborative task management application with team workflows, priority-based scheduling, deadline tracking, and progress monitoring for enhanced productivity.',
+    image: '/images/project-taskmanager.jpg',
+    tags: ['Laravel', 'Vue.js', 'MySQL', 'Tailwind CSS'],
+    category: 'fullstack',
+    github: 'https://github.com/merawi-hub/task-scheduling-system',
     featured: true
   },
   {
     id: 4,
-    title: 'Blog Platform',
-    description: 'A content management system for bloggers with rich text editor, media uploads, SEO optimization, and social sharing capabilities.',
-    image: '/images/project-blog.jpg',
-    tags: ['PHP', 'Laravel', 'MySQL', 'Bootstrap'],
-    category: 'backend',
-    github: 'https://github.com/yourusername/blog'
-  },
-  {
-    id: 5,
-    title: 'Weather Dashboard',
-    description: 'A weather application that provides real-time weather data, forecasts, interactive maps, and data visualization using external APIs.',
-    image: '/images/project-weather.jpg',
-    tags: ['JavaScript', 'API Integration', 'Chart.js', 'CSS3'],
+    title: 'Portfolio Website',
+    description: 'Personal portfolio built with Vue 3 and TypeScript, featuring interactive UI components, form validation, and performance-optimized animations to showcase projects and technical expertise.',
+    image: '/images/project-portfolio.jpg',
+    tags: ['Vue.js', 'TypeScript', 'Vite', 'CSS3'],
     category: 'frontend',
-    github: 'https://github.com/yourusername/weather',
-    demo: 'https://demo.weather.com'
-  },
-  {
-    id: 6,
-    title: 'REST API Service',
-    description: 'A RESTful API service with JWT authentication, rate limiting, comprehensive Swagger documentation, and third-party integration support.',
-    image: '/images/project-api.jpg',
-    tags: ['Python', 'Django REST', 'JWT', 'Swagger'],
-    category: 'backend',
-    github: 'https://github.com/yourusername/api'
+    github: 'https://github.com/merawi-hub/My_Portfolio',
+    featured: false
   }
 ])
 

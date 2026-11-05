@@ -38,7 +38,7 @@ const socialLinks = [
   },
   {
     name: 'Instagram',
-    url: 'https://instagram.com/yourusername', // Update with your Instagram username
+    url: 'https://instagram.com/merawi_kelemework', // Update with your Instagram username
     icon: 'M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z',
     color: '#E4405F'
   },
@@ -90,32 +90,68 @@ const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email)
 }
 
+// Validate name (only letters, spaces, hyphens, and apostrophes)
+const isValidName = (name: string): boolean => {
+  const nameRegex = /^[a-zA-Z\s'-]+$/
+  return nameRegex.test(name)
+}
+
+// Validate subject (letters, numbers, spaces, and basic punctuation)
+const isValidSubject = (subject: string): boolean => {
+  const subjectRegex = /^[a-zA-Z0-9\s,.!?'-]+$/
+  return subjectRegex.test(subject)
+}
+
+// Validate message (letters, numbers, spaces, and common punctuation)
+const isValidMessage = (message: string): boolean => {
+  const messageRegex = /^[a-zA-Z0-9\s,.!?'"()\-_:;@#$%&+=\n]+$/
+  return messageRegex.test(message)
+}
+
 // Validate form
 const validateForm = (): boolean => {
   const errors: Partial<FormData> = {}
   
+  // Name validation
   if (!formData.value.name.trim()) {
     errors.name = 'Name is required'
   } else if (formData.value.name.trim().length < 2) {
     errors.name = 'Name must be at least 2 characters'
+  } else if (formData.value.name.trim().length > 50) {
+    errors.name = 'Name must be less than 50 characters'
+  } else if (!isValidName(formData.value.name.trim())) {
+    errors.name = 'Name can only contain letters, spaces, hyphens, and apostrophes'
   }
   
+  // Email validation
   if (!formData.value.email.trim()) {
     errors.email = 'Email is required'
-  } else if (!isValidEmail(formData.value.email)) {
-    errors.email = 'Please enter a valid email address'
+  } else if (!isValidEmail(formData.value.email.trim())) {
+    errors.email = 'Please enter a valid email address (e.g., name@example.com)'
+  } else if (formData.value.email.trim().length > 100) {
+    errors.email = 'Email must be less than 100 characters'
   }
   
+  // Subject validation
   if (!formData.value.subject.trim()) {
     errors.subject = 'Subject is required'
   } else if (formData.value.subject.trim().length < 5) {
     errors.subject = 'Subject must be at least 5 characters'
+  } else if (formData.value.subject.trim().length > 100) {
+    errors.subject = 'Subject must be less than 100 characters'
+  } else if (!isValidSubject(formData.value.subject.trim())) {
+    errors.subject = 'Subject contains invalid characters'
   }
   
+  // Message validation
   if (!formData.value.message.trim()) {
     errors.message = 'Message is required'
   } else if (formData.value.message.trim().length < 10) {
     errors.message = 'Message must be at least 10 characters'
+  } else if (formData.value.message.trim().length > 1000) {
+    errors.message = 'Message must be less than 1000 characters'
+  } else if (!isValidMessage(formData.value.message.trim())) {
+    errors.message = 'Message contains invalid characters'
   }
   
   formErrors.value = errors
@@ -187,6 +223,37 @@ const handleSubmit = async (e: Event) => {
   }
 }
 
+// Clear error when user starts typing and validate input
+const handleNameInput = () => {
+  clearError('name')
+  // Real-time validation feedback
+  if (formData.value.name && !isValidName(formData.value.name)) {
+    formErrors.value.name = 'Only letters, spaces, hyphens, and apostrophes allowed'
+  }
+}
+
+const handleEmailInput = () => {
+  clearError('email')
+  // Real-time validation feedback for format
+  if (formData.value.email && formData.value.email.length > 5 && !isValidEmail(formData.value.email)) {
+    formErrors.value.email = 'Please enter a valid email format'
+  }
+}
+
+const handleSubjectInput = () => {
+  clearError('subject')
+  if (formData.value.subject && !isValidSubject(formData.value.subject)) {
+    formErrors.value.subject = 'Subject contains invalid characters'
+  }
+}
+
+const handleMessageInput = () => {
+  clearError('message')
+  if (formData.value.message && !isValidMessage(formData.value.message)) {
+    formErrors.value.message = 'Message contains invalid characters'
+  }
+}
+
 // Clear error when user starts typing
 const clearError = (field: keyof FormData) => {
   if (formErrors.value[field]) {
@@ -235,7 +302,7 @@ onMounted(() => {
           <div class="info-card">
             <h4 class="info-title">Let's build something special</h4>
             <p class="info-description">
-              Feel free to reach out through any of these channels. I'm always open to discussing new projects and opportunities.
+              Feel free to reach out to me. I'm always open to discussing new projects and opportunities.
             </p>
             
             <div class="info-list">
@@ -285,7 +352,7 @@ onMounted(() => {
             <!-- Name Field -->
             <div class="form-group">
               <label for="name" class="form-label">
-                Name <span class="required">*</span>
+                Name <span class="required"></span>
               </label>
               <input
                 id="name"
@@ -294,7 +361,8 @@ onMounted(() => {
                 class="form-input"
                 :class="{ 'error': formErrors.name }"
                 placeholder="Your full name"
-                @input="clearError('name')"
+                @input="handleNameInput"
+                maxlength="50"
                 required
               />
               <span v-if="formErrors.name" class="error-message">{{ formErrors.name }}</span>
@@ -303,7 +371,7 @@ onMounted(() => {
             <!-- Email Field -->
             <div class="form-group">
               <label for="email" class="form-label">
-                Email <span class="required">*</span>
+                Email <span class="required"></span>
               </label>
               <input
                 id="email"
@@ -312,7 +380,8 @@ onMounted(() => {
                 class="form-input"
                 :class="{ 'error': formErrors.email }"
                 placeholder="your.email@example.com"
-                @input="clearError('email')"
+                @input="handleEmailInput"
+                maxlength="100"
                 required
               />
               <span v-if="formErrors.email" class="error-message">{{ formErrors.email }}</span>
@@ -321,7 +390,7 @@ onMounted(() => {
             <!-- Subject Field -->
             <div class="form-group">
               <label for="subject" class="form-label">
-                Subject <span class="required">*</span>
+                Subject <span class="required"></span>
               </label>
               <input
                 id="subject"
@@ -330,7 +399,8 @@ onMounted(() => {
                 class="form-input"
                 :class="{ 'error': formErrors.subject }"
                 placeholder="How can I help you?"
-                @input="clearError('subject')"
+                @input="handleSubjectInput"
+                maxlength="100"
                 required
               />
               <span v-if="formErrors.subject" class="error-message">{{ formErrors.subject }}</span>
@@ -339,7 +409,7 @@ onMounted(() => {
             <!-- Message Field -->
             <div class="form-group">
               <label for="message" class="form-label">
-                Message <span class="required">*</span>
+                Message <span class="required"></span>
               </label>
               <textarea
                 id="message"
@@ -348,7 +418,8 @@ onMounted(() => {
                 :class="{ 'error': formErrors.message }"
                 placeholder="Tell me about your project or inquiry..."
                 rows="6"
-                @input="clearError('message')"
+                @input="handleMessageInput"
+                maxlength="1000"
                 required
               ></textarea>
               <span v-if="formErrors.message" class="error-message">{{ formErrors.message }}</span>
@@ -551,9 +622,10 @@ onMounted(() => {
 }
 
 .info-value {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-text-primary);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 /* Social Links */

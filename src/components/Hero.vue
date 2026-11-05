@@ -9,6 +9,40 @@ const showCartoon = ref(true)
 const showOriginal = ref(false)
 const hasAnimatedBefore = ref(false)
 
+const scrollToProjects = () => {
+  const projectsSection = document.getElementById('projects')
+  if (projectsSection) {
+    const navbarHeight = 80
+    const elementPosition = projectsSection.getBoundingClientRect().top + window.pageYOffset
+    const offsetPosition = elementPosition - navbarHeight
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    })
+  }
+}
+
+const downloadCV = () => {
+  // Option 1: Direct download if you have a CV file in public/cv/ folder
+  const link = document.createElement('a')
+  link.href = '/cv/Merawi_Ayele_CV.pdf' // File should be in client/public/cv/
+  link.download = 'Merawi_Ayele_CV.pdf'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  
+  // Option 2: If you don't have CV yet - scroll to contact section
+  // Uncomment these lines and comment out the above if you don't have a CV:
+  // const contactSection = document.getElementById('contact')
+  // if (contactSection) {
+  //   const navbarHeight = 80
+  //   const elementPosition = contactSection.getBoundingClientRect().top + window.pageYOffset
+  //   const offsetPosition = elementPosition - navbarHeight
+  //   window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+  // }
+}
+
 const toggleLanguage = () => {
   showOriginal.value = !showOriginal.value
 }
@@ -80,13 +114,13 @@ watch(showInterests || ref(false), (newVal) => {
           </p>
           
           <div class="hero-actions" :class="{ 'animated-actions': !hasAnimatedBefore }">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" @click="scrollToProjects">
               <span>View My Work</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <button class="btn btn-secondary">
+            <button class="btn btn-secondary" @click="downloadCV">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.5 12.5V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M5.83337 8.33333L10 12.5L14.1667 8.33333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
