@@ -454,9 +454,7 @@ onMounted(() => {
         <p class="footer-text">
           © {{ new Date().getFullYear() }} Merawi Ayele. All rights reserved.
         </p>
-        <p class="footer-subtext">
-          Built with Vue.js, TypeScript & Laravel
-        </p>
+        
       </div>
     </div>
   </section>
