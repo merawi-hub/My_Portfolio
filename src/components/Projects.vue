@@ -23,7 +23,7 @@ const allProjects = ref<Project[]>([
     image: '/images/project-grocery.jpg',
     tags: ['Laravel', 'Vue.js', 'MySQL', 'REST API'],
     category: 'fullstack',
-    github: 'https://github.com/merawi-hub/online-grocery-delivery-app',
+    github: 'https://github.com/merawi-hub/online_grocery_delivery_app.git',
     featured: true
   },
   {
@@ -33,7 +33,7 @@ const allProjects = ref<Project[]>([
     image: '/images/project-clinic.jpg',
     tags: ['Django', 'Python', 'PostgreSQL', 'Bootstrap'],
     category: 'fullstack',
-    github: 'https://github.com/merawi-hub/clinic-appointment-system',
+    github: 'https://github.com/merawi-hub/Clinic_appointment_scheduling_system.git',
     featured: true
   },
   {
@@ -43,7 +43,7 @@ const allProjects = ref<Project[]>([
     image: '/images/project-taskmanager.jpg',
     tags: ['Laravel', 'Vue.js', 'MySQL', 'Tailwind CSS'],
     category: 'fullstack',
-    github: 'https://github.com/merawi-hub/task-scheduling-system',
+    github: 'https://github.com/merawi-hub/Task-Scheduler-System.git',
     featured: true
   },
   {
@@ -53,7 +53,8 @@ const allProjects = ref<Project[]>([
     image: '/images/project-portfolio.jpg',
     tags: ['Vue.js', 'TypeScript', 'Vite', 'CSS3'],
     category: 'frontend',
-    github: 'https://github.com/merawi-hub/My_Portfolio',
+    github: 'https://github.com/merawi-hub/My_Portfolio.git',
+    demo: 'https://merawiayele.com',
     featured: false
   }
 ])
@@ -92,75 +93,67 @@ onMounted(() => {
       </div>
 
       <!-- Projects Grid -->
-      <transition-group name="project-list" tag="div" class="projects-grid">
+      <div class="projects-grid">
         <div
-          v-for="(project, index) in allProjects"
+          v-for="project in allProjects"
           :key="project.id"
           class="project-card"
-          :class="{ featured: project.featured }"
-          :style="{ '--delay': index * 0.1 + 's' }"
         >
-          <div class="project-image-wrapper">
-            <div v-if="project.featured" class="featured-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              Featured
-            </div>
+          <!-- Project Image -->
+          <div class="project-image-container">
             <img 
               :src="project.image" 
               :alt="project.title"
               class="project-image"
               @error="(e) => (e.target as HTMLImageElement).src = '/images/profile-placeholder.svg'"
             />
-            <div class="project-overlay">
-              <div class="project-links">
-                <a 
-                  v-if="project.github" 
-                  :href="project.github" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                  title="View Code"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                </a>
-                <a 
-                  v-if="project.demo" 
-                  :href="project.demo" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                  title="View Demo"
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                    <polyline points="15 3 21 3 21 9"/>
-                    <line x1="10" y1="14" x2="21" y2="3"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
+            <div v-if="project.featured" class="featured-badge">FEATURED</div>
           </div>
-          
-          <div class="project-content">
+
+          <!-- Project Info -->
+          <div class="project-info">
             <h4 class="project-title">{{ project.title }}</h4>
             <p class="project-description">{{ project.description }}</p>
-            
+
+            <!-- Tags -->
             <div class="project-tags">
-              <span 
-                v-for="tag in project.tags" 
-                :key="tag"
-                class="project-tag"
-              >
+              <span v-for="tag in project.tags" :key="tag" class="tag">
                 {{ tag }}
               </span>
             </div>
+
+            <!-- Links -->
+            <div class="project-links">
+              <a 
+                v-if="project.github" 
+                :href="project.github" 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link github"
+                title="View on GitHub"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+              </a>
+              <a 
+                v-if="project.demo" 
+                :href="project.demo" 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link demo"
+                title="View Live Demo"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
-      </transition-group>
+      </div>
     </div>
   </section>
 </template>
@@ -168,14 +161,12 @@ onMounted(() => {
 <style scoped>
 .projects {
   min-height: 100vh;
-  padding: var(--spacing-xl) 0 var(--spacing-xl) 0;
-  position: relative;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
-              transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 100px 0;
   display: flex;
   align-items: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
 }
 
 .projects.visible {
@@ -186,27 +177,25 @@ onMounted(() => {
 /* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 60px;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  opacity: 1;
-  transform: none;
 }
 
 .section-number {
-  font-size: var(--text-xs);
+  font-size: 12px;
   color: var(--color-accent-primary);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 600;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 16px;
 }
 
 .section-title {
-  font-size: var(--text-4xl);
+  font-size: 48px;
   line-height: 1.2;
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 24px 0;
   color: var(--color-text-primary);
   font-weight: 700;
 }
@@ -216,7 +205,7 @@ onMounted(() => {
 }
 
 .section-description {
-  font-size: var(--text-base);
+  font-size: 18px;
   color: var(--color-text-secondary);
   line-height: 1.7;
   margin: 0;
@@ -226,349 +215,155 @@ onMounted(() => {
 /* Projects Grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: var(--spacing-xl);
-  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 32px;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Project Card */
 .project-card {
   background: var(--color-bg-card);
-  backdrop-filter: blur(10px);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: 16px;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  opacity: 0;
-  animation: projectCardEntrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: var(--delay);
-}
-
-@keyframes projectCardEntrance {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .project-card:hover {
   border-color: var(--color-accent-primary);
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(168, 85, 247, 0.35),
-              0 0 0 1px rgba(168, 85, 247, 0.1);
-}
-
-.project-card:hover::before {
-  transform: scaleX(1);
-}
-
-/* Featured Badge */
-.featured-badge {
-  position: absolute;
-  top: var(--spacing-md);
-  right: var(--spacing-md);
-  background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
-  color: white;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  z-index: 2;
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.6);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(1.05);
-  }
-}
-
-.featured-badge svg {
-  animation: rotateStar 3s linear infinite;
-}
-
-@keyframes rotateStar {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.project-card.featured {
-  border-color: rgba(168, 85, 247, 0.3);
-  background: linear-gradient(135deg, 
-    rgba(168, 85, 247, 0.05) 0%, 
-    var(--color-bg-card) 50%,
-    rgba(139, 92, 246, 0.05) 100%
-  );
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
 }
 
 /* Project Image */
-.project-image-wrapper {
+.project-image-container {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 220px;
   overflow: hidden;
   background: var(--color-bg-tertiary);
+  transform: translate3d(0, 0, 0);
 }
 
 .project-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  transform: translate3d(0, 0, 0);
 }
 
-.project-card:hover .project-image {
-  transform: scale(1.15) rotate(1deg);
-}
-
-.project-overlay {
+.featured-badge {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(4px);
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Project Info */
+.project-info {
+  padding: 24px;
+  transform: translate3d(0, 0, 0);
+}
+
+.project-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 12px 0;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.project-description {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+/* Tags */
+.project-tags {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.project-card:hover .project-overlay {
-  opacity: 1;
+.tag {
+  padding: 6px 12px;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
 }
 
+/* Project Links */
 .project-links {
   display: flex;
-  gap: var(--spacing-md);
-  transform: translateY(20px);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
-}
-
-.project-card:hover .project-links {
-  transform: translateY(0);
+  gap: 12px;
 }
 
 .project-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-secondary) 100%);
-  border-radius: var(--radius-full);
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.5);
-  position: relative;
-  overflow: hidden;
-}
-
-.project-link::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
+  width: 48px;
+  height: 48px;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid var(--color-accent-primary);
   border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s;
-}
-
-.project-link:hover::before {
-  width: 100px;
-  height: 100px;
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .project-link:hover {
-  transform: translateY(-4px) scale(1.1);
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.7);
-}
-
-.project-link svg {
-  position: relative;
-  z-index: 1;
-}
-
-/* Project Content */
-.project-content {
-  padding: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  flex: 1;
-  background: var(--color-bg-card);
-}
-
-.project-title {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-.project-card:hover .project-title {
-  color: var(--color-accent-primary);
-}
-
-.project-description {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin: 0;
-  flex: 1;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-  margin-top: var(--spacing-sm);
-}
-
-.project-tag {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.project-tag::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s;
-}
-
-.project-card:hover .project-tag::before {
-  left: 100%;
-}
-
-.project-card:hover .project-tag {
-  border-color: var(--color-accent-primary);
-  color: var(--color-accent-primary);
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(139, 92, 246, 0.15) 100%);
+  background: var(--color-accent-primary);
+  color: white;
   transform: translateY(-2px);
 }
 
-/* Transition Animations */
-.project-list-enter-active,
-.project-list-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.project-link.demo {
+  background: var(--color-accent-primary);
+  color: white;
 }
 
-.project-list-enter-from {
-  opacity: 0;
-  transform: scale(0.9) translateY(20px);
-}
-
-.project-list-leave-to {
-  opacity: 0;
-  transform: scale(0.9) translateY(-20px);
-}
-
-.project-list-move {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.project-link.demo:hover {
+  background: var(--color-accent-secondary);
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .projects-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  }
-}
-
 @media (max-width: 768px) {
   .projects {
-    padding: var(--spacing-md) 0;
+    padding: 80px 0;
   }
 
   .section-title {
-    font-size: var(--text-2xl);
+    font-size: 32px;
   }
 
   .section-description {
-    font-size: var(--text-sm);
+    font-size: 16px;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+    gap: 24px;
   }
 
-  .project-image-wrapper {
+  .project-image-container {
     height: 200px;
-  }
-
-  .project-link {
-    width: 48px;
-    height: 48px;
-  }
-
-  .project-card:hover {
-    transform: translateY(-8px);
   }
 }
 </style>
