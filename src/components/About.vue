@@ -47,37 +47,21 @@ onMounted(() => {
 
       <!-- Main Content -->
       <div class="about-content">
-        <!-- Paragraph 1 - Full Width Above Photo -->
-        <p class="full-width-paragraph">
-          I'm Merawi Ayele, a software engineer and full-stack web developer interested in building 
-          applications that solve real problems and make everyday tasks easier.
-        </p>
-        
-        <!-- Paragraph 2 First Line - Full Width -->
-        <p class="full-width-paragraph">
-          I enjoy working across frontend and backend development, building end-to-end web applications 
-          with an emphasis on functionality, reliability, and user experience.
-        </p>
-        
         <!-- Two Column Layout: Text Left + Photo Right -->
         <div class="about-main">
-          <!-- Left Column: Remaining Text -->
+          <!-- Left Column: Text -->
           <div class="text-column">
             <p class="about-paragraph">
-              Each project challenges me to make thoughtful technical decisions, refine my approach, and deliver 
-              practical solutions to real-world problems.
+              I'm Merawi Ayele, a software engineer and full-stack web developer interested in building 
+              applications that solve real problems and make everyday tasks easier.
             </p>
             
             <p class="about-paragraph">
-              Beyond development, I value communication, teamwork, curiosity, consistency, and continuous learning.
+              I enjoy working across frontend and backend development, building end-to-end web applications 
+              with an emphasis on functionality, reliability, and user experience.
             </p>
             
-            <p class="about-paragraph">
-              My goal is to create reliable, user-friendly applications that provide meaningful value to people 
-              and businesses.
-            </p>
-            
-            <!-- FREE TIME LINK - Below paragraphs, aligned with photo bottom -->
+            <!-- FREE TIME LINK -->
             <div id="interests-button" class="free-time-link">
               <a href="#" @click="handleInterestsClick" class="interests-link">
                 <span class="interests-icon">😉</span>
@@ -107,8 +91,8 @@ onMounted(() => {
 
 <style scoped>
 .about {
-  min-height: 100vh;
-  padding: var(--spacing-xl) 0 0 0;
+  min-height: auto;
+  padding: 20px 0;
   position: relative;
   opacity: 0;
   transform: translateY(30px);
@@ -125,20 +109,20 @@ onMounted(() => {
 
 /* Section Header */
 .section-header {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 20px;
 }
 
 .section-number {
-  font-size: var(--text-xs);
+  font-size: 11px;
   color: var(--color-accent-primary);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 600;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 6px;
 }
 
 .section-title {
-  font-size: var(--text-4xl);
+  font-size: 28px;
   line-height: 1.2;
   margin: 0;
   color: var(--color-text-primary);
@@ -149,38 +133,30 @@ onMounted(() => {
 .about-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 16px;
 }
 
-.full-width-paragraph {
-  font-size: var(--text-base);
-  line-height: 1.7;
+.about-paragraph {
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--color-text-secondary);
   margin: 0;
-  width: 100%;
 }
 
 /* About Main Content */
 .about-main {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: var(--spacing-2xl);
-  margin-bottom: var(--spacing-xl);
+  gap: 30px;
+  margin-bottom: 0;
   align-items: start;
 }
 
 .text-column {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 12px;
   height: 100%;
-}
-
-.about-paragraph {
-  font-size: var(--text-base);
-  line-height: 1.7;
-  color: var(--color-text-secondary);
-  margin: 0;
 }
 
 /* Photo Column */
@@ -192,7 +168,7 @@ onMounted(() => {
 /* Simple Photo */
 .photo-wrapper {
   width: 100%;
-  height: 300px;
+  height: 240px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-border);
@@ -204,10 +180,6 @@ onMounted(() => {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  transition: transform 0.3s ease;
-}
-
-.about-photo {
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -220,7 +192,7 @@ onMounted(() => {
   display: flex;
   justify-content: flex-start;
   margin-top: auto;
-  padding-top: var(--spacing-md);
+  padding-top: 12px;
 }
 
 .interests-link {

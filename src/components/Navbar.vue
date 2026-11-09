@@ -1,138 +1,67 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, inject, type Ref } from 'vue'
+import { ref, inject, type Ref } from 'vue'
 
-const isScrolled = ref(false)
-const isMobileMenuOpen = ref(false)
-const isVisible = ref(false)
-const activeSection = ref('home')
+const isSidebarOpen = ref(false)
 
-// Inject the closeInterests function and showInterests ref from App.vue
 const closeInterests = inject<() => void>('closeInterests')
 const showInterests = inject<Ref<boolean>>('showInterests')
+const navigateToPage = inject<(page: string) => void>('navigateToPage')
+const currentPage = inject<Ref<string>>('currentPage')
 
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
-  
-  // Detect active section
-  const sections = ['home', 'about', 'skills', 'projects', 'journey', 'contact']
-  const navbarHeight = 100
-  
-  // Check if we're in the interests section
-  if (showInterests?.value) {
-    activeSection.value = 'about' // Keep About highlighted when in Interests
-    return
-  }
-  
-  for (const section of sections) {
-    const element = document.getElementById(section)
-    if (element) {
-      const rect = element.getBoundingClientRect()
-      // Check if section is in viewport (accounting for navbar)
-      if (rect.top <= navbarHeight && rect.bottom >= navbarHeight) {
-        activeSection.value = section
-        break
-      }
-    }
-  }
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value
 }
 
-const handleNavClick = (e: Event, section: string) => {
+const closeSidebar = () => {
+  isSidebarOpen.value = false
+}
+
+const handleNavClick = (e: Event, page: string) => {
   e.preventDefault()
   
-  // If interests section is open, close it first
   if (showInterests?.value && closeInterests) {
     closeInterests()
   }
   
-  // After closing any overlay, scroll to the target section
-  setTimeout(() => {
-    const element = document.getElementById(section)
-    if (element) {
-      const navbarHeight = 80
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-      const offsetPosition = elementPosition - navbarHeight
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
-    }
-  }, 150)
-}
-
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
-}
-
-const closeMobileMenu = () => {
-  isMobileMenuOpen.value = false
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  if (navigateToPage) {
+    navigateToPage(page)
+  }
   
-  // Show navbar after 10 seconds (when photo flips back)
-  setTimeout(() => {
-    isVisible.value = true
-  }, 10000)
-  
-  // Initial check for active section
-  handleScroll()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
+  closeSidebar()
+}
 </script>
 
 <template>
-  <nav class="navbar" :class="{ scrolled: isScrolled, visible: isVisible }">
-    <div class="container">
-      <div class="navbar-content">
-        <!-- Logo/Name -->
-        <a href="#home" class="navbar-logo">
-          <span class="logo-text">Merawi</span>
-          <span class="logo-accent">Ayele</span>
-        </a>
+  <nav class="navbar">
+    <!-- Hamburger Menu Button -->
+    <button 
+      class="hamburger-btn" 
+      :class="{ active: isSidebarOpen }"
+      @click="toggleSidebar"
+      aria-label="Toggle menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-        <!-- Desktop Navigation -->
-        <div class="navbar-menu">
-          <a href="#home" class="nav-link" :class="{ active: activeSection === 'home' }" @click="(e) => handleNavClick(e, 'home')">Home</a>
-          <a href="#about" class="nav-link" :class="{ active: activeSection === 'about' }" @click="(e) => handleNavClick(e, 'about')">About</a>
-          <a href="#skills" class="nav-link" :class="{ active: activeSection === 'skills' }" @click="(e) => handleNavClick(e, 'skills')">Skills</a>
-          <a href="#projects" class="nav-link" :class="{ active: activeSection === 'projects' }" @click="(e) => handleNavClick(e, 'projects')">Projects</a>
-          <a href="#journey" class="nav-link" :class="{ active: activeSection === 'journey' }" @click="(e) => handleNavClick(e, 'journey')">Journey</a>
-          <a href="#contact" class="nav-link" :class="{ active: activeSection === 'contact' }" @click="(e) => handleNavClick(e, 'contact')">Contact</a>
-        </div>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" :class="{ open: isSidebarOpen }">
+      <!-- Navigation Label -->
+      <div class="nav-label">Navigation</div>
 
-        <!-- Mobile Menu Toggle -->
-        <button 
-          class="mobile-menu-toggle" 
-          :class="{ active: isMobileMenuOpen }"
-          @click="toggleMobileMenu"
-          aria-label="Toggle menu"
-        >
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </div>
-
-      <!-- Mobile Menu -->
-      <div class="mobile-menu" :class="{ open: isMobileMenuOpen }">
-        <div class="mobile-menu-links">
-          <a href="#home" class="mobile-nav-link" :class="{ active: activeSection === 'home' }" @click="(e) => { handleNavClick(e, 'home'); closeMobileMenu(); }">Home</a>
-          <a href="#about" class="mobile-nav-link" :class="{ active: activeSection === 'about' }" @click="(e) => { handleNavClick(e, 'about'); closeMobileMenu(); }">About</a>
-          <a href="#skills" class="mobile-nav-link" :class="{ active: activeSection === 'skills' }" @click="(e) => { handleNavClick(e, 'skills'); closeMobileMenu(); }">Skills</a>
-          <a href="#projects" class="mobile-nav-link" :class="{ active: activeSection === 'projects' }" @click="(e) => { handleNavClick(e, 'projects'); closeMobileMenu(); }">Projects</a>
-          <a href="#journey" class="mobile-nav-link" :class="{ active: activeSection === 'journey' }" @click="(e) => { handleNavClick(e, 'journey'); closeMobileMenu(); }">Journey</a>
-          <a href="#contact" class="mobile-nav-link" :class="{ active: activeSection === 'contact' }" @click="(e) => { handleNavClick(e, 'contact'); closeMobileMenu(); }">Contact</a>
-        </div>
-        <a href="#contact" class="mobile-cta btn btn-primary" @click="(e) => { handleNavClick(e, 'contact'); closeMobileMenu(); }">
-          Contact
-        </a>
+      <!-- Navigation Links -->
+      <div class="nav-links">
+        <a href="#home" :class="{ active: currentPage === 'home' }" @click="(e) => handleNavClick(e, 'home')">Home</a>
+        <a href="#about" :class="{ active: currentPage === 'about' }" @click="(e) => handleNavClick(e, 'about')">About</a>
+        <a href="#projects" :class="{ active: currentPage === 'projects' }" @click="(e) => handleNavClick(e, 'projects')">Project</a>
+        <a href="#skills" :class="{ active: currentPage === 'skills' }" @click="(e) => handleNavClick(e, 'skills')">Skills</a>
+        <a href="#contact" :class="{ active: currentPage === 'contact' }" @click="(e) => handleNavClick(e, 'contact')">Contact</a>
       </div>
     </div>
+
+    <!-- Overlay -->
+    <div class="overlay" :class="{ show: isSidebarOpen }" @click="closeSidebar"></div>
   </nav>
 </template>
 
@@ -142,207 +71,203 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  z-index: var(--z-fixed);
-  background: transparent;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: var(--spacing-md) 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-20px);
+  z-index: 1000;
+  pointer-events: none;
 }
 
-.navbar.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.navbar.scrolled {
-  background: rgba(10, 10, 15, 0.95);
-  backdrop-filter: blur(10px);
-  padding: var(--spacing-sm) 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.navbar-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Logo */
-.navbar-logo {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.navbar-logo:hover {
-  transform: translateY(-2px);
-}
-
-.logo-text {
-  color: var(--color-text-primary);
-}
-
-.logo-accent {
-  color: var(--color-accent-primary);
-}
-
-/* Desktop Menu */
-.navbar-menu {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xl);
-  margin-left: auto;
-}
-
-.nav-link {
-  color: var(--color-text-secondary);
-  font-size: var(--text-base);
-  font-weight: 500;
-  text-decoration: none;
-  position: relative;
-  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--color-accent-primary);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.nav-link:hover {
-  color: var(--color-text-primary);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-
-.nav-link.active {
-  color: var(--color-text-primary);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar-menu {
-    display: none;
-  }
-
-  .mobile-menu-toggle {
-    display: flex;
-  }
-}
-
-/* Mobile Menu Toggle */
-.mobile-menu-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
+/* Hamburger Button */
+.hamburger-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: rgba(90, 140, 140, 0.9);
   border: none;
+  border-radius: 50%;
   cursor: pointer;
-  padding: var(--spacing-xs);
-  z-index: calc(var(--z-fixed) + 2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  z-index: 1002;
+  pointer-events: all;
+  transition: all 0.3s ease;
 }
 
-.hamburger-line {
-  width: 25px;
+.hamburger-btn:hover {
+  background: rgba(90, 140, 140, 1);
+  transform: scale(1.05);
+}
+
+.hamburger-btn span {
+  width: 24px;
   height: 2px;
-  background: var(--color-text-primary);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+  transition: all 0.3s ease;
   border-radius: 2px;
 }
 
-.mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-  transform: rotate(45deg) translate(7px, 7px);
+.hamburger-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
 }
 
-.mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+.hamburger-btn.active span:nth-child(2) {
   opacity: 0;
 }
 
-.mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -7px);
+.hamburger-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Mobile Menu */
-.mobile-menu {
+/* Sidebar */
+.sidebar {
   position: fixed;
   top: 0;
-  right: -100%;
-  width: 80%;
-  max-width: 300px;
+  right: -400px;
+  width: 400px;
   height: 100vh;
-  background: var(--color-bg-secondary);
-  border-left: 1px solid var(--color-border);
-  padding: var(--spacing-3xl) var(--spacing-lg);
+  background: #0a0e1a;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px 40px;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  pointer-events: all;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
-  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: calc(var(--z-fixed) + 1);
-  overflow-y: auto;
+  justify-content: center;
 }
 
-.mobile-menu.open {
+.sidebar.open {
   right: 0;
 }
 
-.mobile-menu-links {
+/* Close Button */
+.close-btn {
+  display: none;
+}
+
+/* Navigation Label */
+.nav-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 30px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Navigation Links */
+.nav-links {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 20px;
 }
 
-.mobile-nav-link {
-  color: var(--color-text-secondary);
-  font-size: var(--text-lg);
-  font-weight: 500;
+.nav-links a {
+  font-size: 32px;
+  font-weight: 300;
+  color: white;
   text-decoration: none;
-  padding: var(--spacing-sm) 0;
-  border-bottom: 1px solid var(--color-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
+  padding: 6px 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
 }
 
-.mobile-nav-link:hover,
-.mobile-nav-link.active {
-  color: var(--color-accent-primary);
-  padding-left: var(--spacing-sm);
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: rgba(90, 140, 140, 1);
+  transition: width 0.3s ease;
 }
 
-.mobile-cta {
-  width: 100%;
-  justify-content: center;
-  margin-top: auto;
+.nav-links a:hover,
+.nav-links a.active {
+  color: rgba(90, 140, 140, 1);
+  padding-left: 16px;
+}
+
+.nav-links a.active::after {
+  width: 60px;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .navbar-menu,
-  .navbar-cta {
-    display: none;
+  .hamburger-btn {
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
   }
 
-  .mobile-menu-toggle {
-    display: flex;
+  .sidebar {
+    width: 100%;
+    right: -100%;
+    padding: 30px;
+  }
+
+  .nav-label {
+    font-size: 11px;
+    margin-bottom: 20px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links a {
+    font-size: 28px;
   }
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+@media (max-height: 600px) {
+  .sidebar {
+    padding: 30px 40px;
+  }
+  
+  .nav-label {
+    font-size: 11px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+  
+  .nav-links {
+    gap: 12px;
+  }
+  
+  .nav-links a {
+    font-size: 24px;
+    padding: 4px 0;
+  }
 }
 </style>

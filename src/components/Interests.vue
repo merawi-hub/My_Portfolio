@@ -106,11 +106,34 @@ const handleBack = (e: Event) => {
 
 <style scoped>
 .interests {
-  min-height: 100vh;
-  padding: calc(80px + var(--spacing-md)) 0 var(--spacing-2xl) 0;
-  position: relative;
-  scroll-margin-top: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 100px 20px 60px;
+  background: #0a0e1a;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 9999;
   animation: fadeInSection 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interests::-webkit-scrollbar {
+  width: 8px;
+}
+
+.interests::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.interests::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.4);
+  border-radius: 4px;
+}
+
+.interests::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.6);
 }
 
 @keyframes fadeInSection {
