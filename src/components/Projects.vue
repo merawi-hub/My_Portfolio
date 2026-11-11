@@ -46,31 +46,48 @@ const allProjects = ref<Project[]>([
     demo: 'https://merawiayele.com',
   }
 ])
+
+const activeProjectIndex = ref(0)
+
+const setActiveProject = (index: number) => {
+  activeProjectIndex.value = index
+}
+
+const activeProject = ref(allProjects.value[activeProjectIndex.value])
+
+const updateActiveProject = (index: number) => {
+  activeProjectIndex.value = index
+  activeProject.value = allProjects.value[index]
+}
 </script>
 
 <template>
   <section id="projects" class="projects">
     <div class="container">
-      <!-- Section Header -->
       <div class="section-header">
         <h2 class="section-title">MY PROJECTS</h2>
       </div>
 
-      <!-- Stacked Cards -->
-      <div class="stacked-cards">
-        <div
+      <div class="project-tabs">
+        <button
           v-for="(project, index) in allProjects"
           :key="project.id"
-          class="project-card"
-          :style="{ '--index': index }"
+          @click="updateActiveProject(index)"
+          class="tab-btn"
+          :class="{ active: activeProjectIndex === index }"
         >
-          <!-- Card Header with Title and Links -->
+          Project {{ index + 1 }}
+        </button>
+      </div>
+
+      <div class="project-showcase">
+        <div class="project-card">
           <div class="card-header">
-            <h3 class="project-title">{{ project.title }}</h3>
+            <h3 class="project-title">{{ allProjects[activeProjectIndex].title }}</h3>
             <div class="project-links">
               <a 
-                v-if="project.demo" 
-                :href="project.demo" 
+                v-if="allProjects[activeProjectIndex].demo" 
+                :href="allProjects[activeProjectIndex].demo" 
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link-btn demo"
@@ -78,8 +95,8 @@ const allProjects = ref<Project[]>([
                 Demo
               </a>
               <a 
-                v-if="project.github" 
-                :href="project.github" 
+                v-if="allProjects[activeProjectIndex].github" 
+                :href="allProjects[activeProjectIndex].github" 
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link-btn code"
@@ -89,21 +106,19 @@ const allProjects = ref<Project[]>([
             </div>
           </div>
 
-          <!-- Project Image -->
           <div class="project-image-wrapper">
             <img 
-              :src="project.image" 
-              :alt="project.title"
+              :src="allProjects[activeProjectIndex].image" 
+              :alt="allProjects[activeProjectIndex].title"
               class="project-image"
               @error="(e) => (e.target as HTMLImageElement).src = '/images/profile-placeholder.svg'"
             />
           </div>
 
-          <!-- Project Info -->
           <div class="project-info">
-            <p class="project-description">{{ project.description }}</p>
+            <p class="project-description">{{ allProjects[activeProjectIndex].description }}</p>
             <div class="project-tags">
-              <span v-for="tag in project.tags" :key="tag" class="tag">
+              <span v-for="tag in allProjects[activeProjectIndex].tags" :key="tag" class="tag">
                 {{ tag }}
               </span>
             </div>
@@ -118,7 +133,7 @@ const allProjects = ref<Project[]>([
 .projects {
   min-height: 100vh;
   height: 100vh;
-  padding: 60px 0 40px;
+  padding: 90px 0 20px;
   display: flex;
   align-items: center;
   overflow-y: auto;
@@ -132,62 +147,82 @@ const allProjects = ref<Project[]>([
   width: 100%;
 }
 
-/* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 12px;
 }
 
 .section-title {
-  font-size: 48px;
+  font-size: 32px;
   font-weight: 700;
   color: white;
   letter-spacing: 0.05em;
   margin: 0;
 }
 
-/* Stacked Cards Container */
-.stacked-cards {
-  position: relative;
-  min-height: 600px;
+.project-tabs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
-/* Project Card */
+.tab-btn {
+  padding: 6px 18px;
+  background: rgba(30, 35, 50, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(30, 35, 50, 0.9);
+  border-color: rgba(90, 140, 140, 0.5);
+  color: rgb(90, 140, 140);
+}
+
+.tab-btn.active {
+  background: rgba(90, 140, 140, 0.2);
+  border-color: rgb(90, 140, 140);
+  color: rgb(90, 140, 140);
+}
+
+.project-showcase {
+  display: flex;
+  justify-content: center;
+}
+
 .project-card {
-  position: absolute;
-  top: calc(var(--index) * 30px);
-  left: 50%;
-  transform: translateX(-50%) scale(calc(1 - var(--index) * 0.05));
-  width: 90%;
+  width: 100%;
   max-width: 900px;
   background: rgba(30, 35, 50, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
-  z-index: calc(10 - var(--index));
 }
 
 .project-card:hover {
-  transform: translateX(-50%) scale(calc(1 - var(--index) * 0.05)) translateY(-10px);
+  transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* Card Header */
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 32px;
+  padding: 14px 24px;
   background: rgba(20, 25, 40, 0.8);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .project-title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   color: white;
   margin: 0;
@@ -230,10 +265,9 @@ const allProjects = ref<Project[]>([
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Project Image */
 .project-image-wrapper {
   width: 100%;
-  height: 300px;
+  height: 220px;
   overflow: hidden;
   background: rgba(20, 25, 40, 0.5);
 }
@@ -249,35 +283,33 @@ const allProjects = ref<Project[]>([
   transform: scale(1.05);
 }
 
-/* Project Info */
 .project-info {
-  padding: 24px 32px;
+  padding: 14px 24px;
 }
 
 .project-description {
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 }
 
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 6px;
 }
 
 .tag {
-  padding: 6px 14px;
+  padding: 3px 10px;
   background: rgba(90, 140, 140, 0.15);
   border: 1px solid rgba(90, 140, 140, 0.3);
-  border-radius: 6px;
-  font-size: 13px;
+  border-radius: 4px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .projects {
     padding: 40px 0 20px;
@@ -291,9 +323,13 @@ const allProjects = ref<Project[]>([
     font-size: 32px;
   }
 
-  .project-card {
-    width: 95%;
-    top: calc(var(--index) * 20px);
+  .project-tabs {
+    gap: 10px;
+  }
+
+  .tab-btn {
+    padding: 10px 20px;
+    font-size: 14px;
   }
 
   .card-header {

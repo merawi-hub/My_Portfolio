@@ -13,13 +13,11 @@ onMounted(() => {
 <template>
   <section id="home" class="hero" :class="{ visible: isVisible }">
     <div class="container">
-      <!-- Name Introduction -->
       <div class="hero-name">
         <h2 class="name-greeting">Hi, I'm</h2>
         <h1 class="name-title">Merawi Ayele</h1>
       </div>
 
-      <!-- Centered Tagline -->
       <div class="hero-tagline">
         <h3 class="tagline-text">
           BUILDING INNOVATIVE SOLUTIONS WITH
@@ -27,7 +25,6 @@ onMounted(() => {
         <div class="tagline-highlight">MODERN TECHNOLOGIES</div>
       </div>
 
-      <!-- Centered Image -->
       <div class="laptop-container">
         <img src="/images/profile.jpg" alt="Merawi Ayele - Full Stack Developer" class="laptop-screen" />
       </div>
@@ -66,7 +63,6 @@ onMounted(() => {
   padding: 0 20px;
 }
 
-/* Hero Name */
 .hero-name {
   margin-bottom: 0;
 }
@@ -96,7 +92,6 @@ onMounted(() => {
   letter-spacing: 0.03em;
 }
 
-/* Hero Tagline */
 .hero-tagline {
   max-width: 800px;
   position: relative;
@@ -123,7 +118,6 @@ onMounted(() => {
   letter-spacing: 0.05em;
 }
 
-/* Laptop Container */
 .laptop-container {
   position: relative;
   width: 100%;
@@ -145,7 +139,6 @@ onMounted(() => {
   transform: translateY(-8px);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hero {
     padding: 25px 20px 40px;

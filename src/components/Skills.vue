@@ -8,7 +8,6 @@ interface TechStack {
   icon: string
 }
 
-// Frontend tech stacks
 const frontendStacks = ref<TechStack[]>([
   { name: 'HTML5', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg' },
   { name: 'CSS3', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg' },
@@ -19,7 +18,6 @@ const frontendStacks = ref<TechStack[]>([
   { name: 'Tailwind', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg' }
 ])
 
-// Backend tech stacks
 const backendStacks = ref<TechStack[]>([
   { name: 'PHP', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg' },
   { name: 'Laravel', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/laravel/laravel-original.svg' },
@@ -28,7 +26,6 @@ const backendStacks = ref<TechStack[]>([
   { name: 'MySQL', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg' }
 ])
 
-// Tools
 const toolsStacks = ref<TechStack[]>([
   { name: 'Git', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg' },
   { name: 'GitHub', icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg' },
@@ -58,7 +55,6 @@ onMounted(() => {
 <template>
   <section id="skills" class="skills" :class="{ visible: isVisible }">
     <div class="container">
-      <!-- Main Header -->
       <div class="main-header">
         <h2 class="main-title">Technologies & Tools</h2>
         <p class="main-description">
@@ -66,9 +62,7 @@ onMounted(() => {
         </p>
       </div>
 
-      <!-- Three Sections -->
       <div class="stacks-wrapper">
-        <!-- Frontend Section -->
         <div class="stack-section">
           <div class="section-header">
             <span class="section-icon">🎨</span>
@@ -89,7 +83,6 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Backend Section -->
         <div class="stack-section">
           <div class="section-header">
             <span class="section-icon">⚙️</span>
@@ -110,7 +103,6 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Tools Section -->
         <div class="stack-section">
           <div class="section-header">
             <span class="section-icon">🛠️</span>
@@ -155,7 +147,6 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-/* Main Header */
 .main-header {
   text-align: center;
   margin-bottom: 20px;
@@ -178,7 +169,6 @@ onMounted(() => {
   line-height: 1.4;
 }
 
-/* Stacks Wrapper - Three columns */
 .stacks-wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -186,7 +176,6 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-/* Stack Section */
 .stack-section {
   background: rgba(25, 30, 45, 0.5);
   border: 1px solid rgba(90, 140, 140, 0.2);
@@ -199,7 +188,6 @@ onMounted(() => {
   border-color: rgba(90, 140, 140, 0.4);
 }
 
-/* Section Header */
 .section-header {
   display: flex;
   align-items: center;
@@ -225,14 +213,12 @@ onMounted(() => {
   line-height: 1.3;
 }
 
-/* Tech Grid */
 .tech-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   gap: 10px;
 }
 
-/* Tech Item */
 .tech-item {
   display: flex;
   flex-direction: column;
@@ -271,7 +257,6 @@ onMounted(() => {
   line-height: 1.2;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .stacks-wrapper {
     grid-template-columns: 1fr;

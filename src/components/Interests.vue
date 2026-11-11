@@ -33,7 +33,6 @@ const interests = ref([
 const handleBack = (e: Event) => {
   e.preventDefault()
   emit('close-interests')
-  // Scroll to the interests button after a small delay to ensure About is rendered
   setTimeout(() => {
     const button = document.getElementById('interests-button')
     if (button) {
@@ -46,12 +45,10 @@ const handleBack = (e: Event) => {
 <template>
   <section id="interests" class="interests">
     <div class="container">
-      <!-- Back Button -->
       <a href="#about" @click="handleBack" class="back-button">
         <span>Back</span>
       </a>
 
-      <!-- Section Header -->
       <div id="interests-header" class="section-header">
         <h2 class="section-number">😎✌️ WHEN I'M NOT CODING</h2>
         <h3 class="section-title">
@@ -62,7 +59,6 @@ const handleBack = (e: Event) => {
         </p>
       </div>
 
-      <!-- Flip Cards Grid -->
       <div class="cards-grid">
         <div 
           v-for="interest in interests" 
@@ -70,10 +66,8 @@ const handleBack = (e: Event) => {
           class="flip-card"
         >
           <div class="flip-card-inner">
-            <!-- Front Face -->
             <div class="flip-card-front">
               <div class="card-icon-wrapper">
-                <!-- Different icons for each card -->
                 <div class="card-icon" v-if="interest.id === 1">📝</div>
                 <div class="card-icon" v-else-if="interest.id === 2">📚</div>
                 <div class="card-icon" v-else-if="interest.id === 3">🗺️</div>
@@ -83,7 +77,6 @@ const handleBack = (e: Event) => {
               <div class="card-decoration"></div>
             </div>
 
-            <!-- Back Face -->
             <div class="flip-card-back">
               <div class="card-image">
                 <img 
@@ -147,7 +140,6 @@ const handleBack = (e: Event) => {
   }
 }
 
-/* Back Button */
 .back-button {
   display: inline-flex;
   align-items: center;
@@ -188,7 +180,6 @@ const handleBack = (e: Event) => {
   box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
 }
 
-/* Section Header */
 .section-header {
   text-align: center;
   margin-bottom: var(--spacing-lg);
@@ -246,7 +237,6 @@ const handleBack = (e: Event) => {
   }
 }
 
-/* Cards Grid */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -255,7 +245,6 @@ const handleBack = (e: Event) => {
   margin: 0 auto;
 }
 
-/* Flip Card */
 .flip-card {
   height: 400px;
   perspective: 1000px;
@@ -272,7 +261,6 @@ const handleBack = (e: Event) => {
   transform-style: preserve-3d;
 }
 
-/* Flip on HOVER instead of click */
 .flip-card:hover .flip-card-inner {
   transform: rotateY(180deg);
 }
@@ -290,7 +278,6 @@ const handleBack = (e: Event) => {
   overflow: hidden;
 }
 
-/* Front Face */
 .flip-card-front {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
   display: flex;
@@ -306,7 +293,6 @@ const handleBack = (e: Event) => {
   border-color: var(--color-accent-primary);
 }
 
-/* Front Face */
 .flip-card-front {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
   display: flex;
@@ -388,7 +374,6 @@ const handleBack = (e: Event) => {
   margin: 0;
 }
 
-/* Back Face */
 .flip-card-back {
   background: var(--color-bg-card);
   transform: rotateY(180deg);
@@ -431,7 +416,6 @@ const handleBack = (e: Event) => {
   margin: 0;
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);

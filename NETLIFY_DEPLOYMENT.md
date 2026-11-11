@@ -5,69 +5,149 @@
 ### 1. Update Personal Information
 
 #### Contact.vue
+The Contact component has been simplified. Update the contact information:
 ```typescript
-// Update social links (lines ~27-47)
-const socialLinks = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com/YOUR_USERNAME', // ← Update
-  },
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/in/YOUR_USERNAME', // ← Update
-  },
-  {
-    name: 'Twitter',
-    url: 'https://twitter.com/YOUR_USERNAME', // ← Update
-  },
-  {
-    name: 'Email',
-    url: 'mailto:YOUR_EMAIL@example.com', // ← Update
-  }
-]
 
-// Update contact info (lines ~49-67)
-const contactInfo = [
+const contactCards = [
   {
     icon: '📧',
     label: 'Email',
-    value: 'YOUR_EMAIL@example.com', // ← Update
-    link: 'mailto:YOUR_EMAIL@example.com'
+    value: 'merawi@example.com', 
+    link: 'mailto:merawi@example.com'
   },
   {
     icon: '📱',
     label: 'Phone',
-    value: '+1 (555) 123-4567', // ← Update
-    link: 'tel:+15551234567'
+    value: '+251 912 345 678', 
+    link: 'tel:+251912345678'
+  }
+]
+
+const socialLinks = [
+  { 
+    name: 'GitHub', 
+    icon: 'github-icon',
+    url: 'https:
   },
-  {
-    icon: '📍',
-    label: 'Location',
-    value: 'Your City, Country', // ← Update
-    link: null
+  { 
+    name: 'LinkedIn', 
+    icon: 'linkedin-icon',
+    url: 'https:
+  },
+  { 
+    name: 'Twitter', 
+    icon: 'twitter-icon',
+    url: 'https:
   }
 ]
 ```
 
-#### Experience.vue
-Update your work experience, education, and certifications (lines ~12-55).
-
-#### Hero.vue
-Update your name, title, and description.
+#### Projects.vue
+Update your 4 projects with real data:
+```typescript
+const allProjects = [
+  {
+    id: 1,
+    title: 'Online Grocery Delivery App',
+    description: 'Your description here...',
+    image: '/images/project-grocery.jpg', 
+    tags: ['Laravel', 'Vue.js', 'MySQL', 'REST API'],
+    github: 'https:
+    demo: 'https:
+  },
+  
+]
+```
 
 #### About.vue
-Update your bio and information.
+Update your personal information:
+```typescript
 
-### 2. Setup Contact Form (Formspree - Free)
+"I'm Merawi Ayele, a software engineer..." 
+"I enjoy working across frontend and backend..." 
+"I'm currently working with Laravel and Vue.js" 
+```
+
+Also update:
+- Resume download link: `href="/resume.pdf"` → Add your resume PDF to `public/resume.pdf`
+- About photo: `src="/images/about.jpg"` → Add your photo
+
+#### Hero.vue  
+Update your name and tagline:
+```vue
+<h1 class="name-title">Merawi Ayele</h1> 
+<h3 class="tagline-text">BUILDING INNOVATIVE SOLUTIONS WITH</h3> 
+<div class="tagline-highlight">MODERN TECHNOLOGIES</div> 
+```
+
+Update hero image: `src="/images/profile.jpg"` → Add your image
+
+#### Skills.vue
+Update your tech stack across three sections:
+```typescript
+
+const frontendSkills = [
+  { name: 'Vue.js', level: 90, icon: '⚡' },
+  
+]
+
+const backendSkills = [
+  { name: 'Laravel', level: 85, icon: '🔧' },
+  
+]
+
+const tools = [
+  { name: 'Git', level: 88, icon: '🔀' },
+  
+]
+```
+
+#### Interests.vue
+Update your personal interests/hobbies:
+```typescript
+const interests = [
+  { 
+    name: 'Music', 
+    icon: '🎵', 
+    description: 'Your description...' 
+  },
+  
+]
+```
+
+### 2. Add Images/Assets
+
+Place all your images in `client/public/images/`:
+- **Profile photo**: `/images/profile.jpg` (used in Hero section)
+- **About photo**: `/images/about.jpg` (used in About section)  
+- **Project screenshots**: 
+  - `/images/project-grocery.jpg`
+  - `/images/project-clinic.jpg`
+  - `/images/project-taskmanager.jpg`
+  - `/images/project-portfolio.jpg`
+- **Resume PDF**: `/resume.pdf` (for download button in About section)
+- **Favicon**: `/favicon.ico`
+
+**Important Notes**:
+- Image paths start with `/` (e.g., `/images/profile.jpg`)
+- File names are case-sensitive
+- Recommended image sizes:
+  - Profile/About photos: 800x800px (square, 1:1 aspect ratio)
+  - Project screenshots: 1200x600px or actual app screenshots
+  - Optimize images before uploading (use tools like TinyPNG)
+
+### 3. Contact Form Setup
+
+**Note**: This portfolio currently uses a client-side only contact form. To receive actual messages, you need to integrate a form service.
 
 #### Option A: Formspree (Recommended - Easy & Free)
 
-1. **Sign up** at [https://formspree.io/](https://formspree.io/)
+1. **Sign up** at [https:
 2. **Create a new form** project
-3. **Get your form endpoint**: `https://formspree.io/f/YOUR_FORM_ID`
+3. **Get your form endpoint**: `https:
 4. **Update Contact.vue** (line ~72):
    ```typescript
-   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+   const FORMSPREE_ENDPOINT = 'https:
    ```
 
 **Features**:
@@ -79,7 +159,7 @@ Update your bio and information.
 
 #### Option B: EmailJS (Alternative)
 
-1. **Sign up** at [https://www.emailjs.com/](https://www.emailjs.com/)
+1. **Sign up** at [https:
 2. **Create email service** (Gmail, Outlook, etc.)
 3. **Create email template**
 4. **Install EmailJS**:
@@ -111,8 +191,7 @@ Update your bio and information.
        
        submitStatus.value = 'success'
        statusMessage.value = 'Message sent successfully!'
-       
-       // Reset form
+
        formData.value = { name: '', email: '', subject: '', message: '' }
      } catch (error) {
        submitStatus.value = 'error'
@@ -133,7 +212,20 @@ Place all your images in `client/public/images/`:
 
 Update image paths in components to match.
 
-### 4. Build Configuration
+### 4. Animation Settings (Optional)
+
+The portfolio includes scroll-based card morphing animations. Current settings:
+- **Scroll threshold**: 500px (4-5 scroll actions needed)
+- **Lock timeout**: 1 second after reaching full rectangle
+- These are optimized values - only change if explicitly needed
+
+Settings are in `client/src/App.vue`:
+```typescript
+const SCROLL_THRESHOLD = 500 
+const LOCK_TIMEOUT = 1000 
+```
+
+### 5. Build Configuration
 
 Create `client/netlify.toml`:
 ```toml
@@ -150,7 +242,7 @@ Create `client/netlify.toml`:
   NODE_VERSION = "18"
 ```
 
-### 5. Environment Variables (if needed)
+### 6. Environment Variables (if needed)
 
 If using EmailJS or other services requiring API keys:
 
@@ -165,6 +257,36 @@ If using EmailJS or other services requiring API keys:
    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
    ```
 
+## Current Project Structure
+
+```
+My_Portfolio/
+├── client/                          # Vue.js frontend
+│   ├── public/
+│   │   ├── images/                 # Place all images here
+│   │   │   ├── profile.jpg         # Hero section image
+│   │   │   ├── about.jpg           # About section image
+│   │   │   ├── project-*.jpg       # Project screenshots
+│   │   │   └── ...
+│   │   ├── resume.pdf              # Your resume for download
+│   │   └── favicon.ico
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Hero.vue           # Home page with name
+│   │   │   ├── About.vue          # About section with bio & resume button
+│   │   │   ├── Skills.vue         # Skills in 3 sections
+│   │   │   ├── Projects.vue       # 4 projects with tabs
+│   │   │   ├── Contact.vue        # Contact form & social links
+│   │   │   ├── Interests.vue      # Personal interests popup
+│   │   │   └── Navbar.vue         # Navigation menu
+│   │   ├── App.vue                # Main app with scroll animations
+│   │   └── main.ts
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── netlify.toml               # Netlify configuration
+└── server/                         # Laravel backend (not deployed to Netlify)
+```
+
 ## Deployment Methods
 
 ### Method 1: GitHub + Netlify (Recommended)
@@ -178,19 +300,19 @@ If using EmailJS or other services requiring API keys:
    ```
 
 2. **Create GitHub Repository**:
-   - Go to [github.com](https://github.com)
+   - Go to [github.com](https:
    - Create new repository
    - Don't initialize with README
 
 3. **Push to GitHub**:
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+   git remote add origin https:
    git branch -M main
    git push -u origin main
    ```
 
 4. **Deploy on Netlify**:
-   - Go to [netlify.com](https://netlify.com)
+   - Go to [netlify.com](https:
    - Click "Add new site" → "Import an existing project"
    - Connect to GitHub
    - Select your repository
@@ -213,7 +335,7 @@ If using EmailJS or other services requiring API keys:
    ```
 
 2. **Deploy**:
-   - Go to [netlify.com](https://netlify.com)
+   - Go to [netlify.com](https:
    - Drag & drop the `client/dist` folder to Netlify
 
 3. **Note**: Manual deployments required for updates
@@ -264,7 +386,7 @@ If using EmailJS or other services requiring API keys:
      @submit.prevent="handleNetlifySubmit"
    >
      <input type="hidden" name="form-name" value="contact" />
-     <!-- Rest of form fields -->
+     
    </form>
    ```
 
@@ -312,7 +434,7 @@ export default defineConfig({
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true // Remove console.logs in production
+        drop_console: true 
       }
     },
     rollupOptions: {
@@ -335,30 +457,26 @@ Update `client/index.html`:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Meta Tags -->
+
   <title>Merawi Ayele - Full Stack Developer</title>
   <meta name="description" content="Full Stack Developer specializing in Vue.js, Laravel, and modern web technologies. View my portfolio and get in touch.">
   <meta name="keywords" content="Full Stack Developer, Vue.js, Laravel, Web Developer, Portfolio">
   <meta name="author" content="Merawi Ayele">
-  
-  <!-- Open Graph / Social Media -->
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="Merawi Ayele - Full Stack Developer">
   <meta property="og:description" content="Full Stack Developer specializing in Vue.js, Laravel, and modern web technologies.">
   <meta property="og:image" content="/images/profile.jpg">
-  <meta property="og:url" content="https://your-domain.com">
-  
-  <!-- Twitter Card -->
+  <meta property="og:url" content="https:
+
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Merawi Ayele - Full Stack Developer">
   <meta name="twitter:description" content="Full Stack Developer specializing in Vue.js, Laravel, and modern web technologies.">
   <meta name="twitter:image" content="/images/profile.jpg">
-  
-  <!-- Favicon -->
+
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https:
 </head>
 <body>
   <div id="app"></div>
@@ -371,11 +489,11 @@ Update `client/index.html`:
 
 #### Google Analytics:
 
-1. **Get tracking ID** from [analytics.google.com](https://analytics.google.com)
+1. **Get tracking ID** from [analytics.google.com](https:
 2. **Add to index.html** (in `<head>`):
    ```html
-   <!-- Google Analytics -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+   
+   <script async src="https:
    <script>
      window.dataLayer = window.dataLayer || [];
      function gtag(){dataLayer.push(arguments);}
@@ -419,7 +537,7 @@ Update `client/index.html`:
 - Check browser console for errors
 - Test with curl:
   ```bash
-  curl -X POST https://formspree.io/f/YOUR_FORM_ID \
+  curl -X POST https:
     -H "Content-Type: application/json" \
     -d '{"email":"test@example.com","name":"Test","subject":"Test","message":"Test"}'
   ```
@@ -466,25 +584,58 @@ Update `client/index.html`:
 ## Final Checklist
 
 Before going live:
-- [ ] Update all personal information
-- [ ] Setup contact form (Formspree/EmailJS)
-- [ ] Add real project data
-- [ ] Update experience/education
-- [ ] Add profile photo and project images
-- [ ] Test contact form
-- [ ] Test on mobile devices
-- [ ] Check SEO meta tags
+- [ ] Update Hero section with your name and tagline
+- [ ] Update About section with your bio and current tech stack
+- [ ] Add your profile photo (`/images/profile.jpg`)
+- [ ] Add your about photo (`/images/about.jpg`)
+- [ ] Add your resume PDF (`/resume.pdf`)
+- [ ] Update all 4 projects with real data and screenshots
+- [ ] Update Skills section with your actual skills
+- [ ] Update Interests section with your hobbies
+- [ ] Update Contact section with your email and phone
+- [ ] Update social media links (GitHub, LinkedIn, Twitter)
+- [ ] Setup contact form (Formspree/EmailJS/Netlify Forms)
+- [ ] Test contact form submission
+- [ ] Test all navigation (Home, About, Skills, Projects, Contact)
+- [ ] Test "Things I enjoy" button and interests popup
+- [ ] Test resume download button
+- [ ] Test project tabs switching (Project 1-4)
+- [ ] Verify scroll animations work smoothly
+- [ ] Test on mobile devices and different screen sizes
+- [ ] Check all images load correctly
+- [ ] Verify no console errors in browser
+- [ ] Test all external links (GitHub, LinkedIn, etc.)
+- [ ] Check SEO meta tags in `index.html`
 - [ ] Setup custom domain (optional)
 - [ ] Enable analytics (optional)
-- [ ] Test all navigation links
-- [ ] Verify social media links
+
+## Portfolio Features Summary
+
+**Current Features**:
+- ✅ Smooth scroll-based card morphing animations
+- ✅ 5 main sections: Home, About, Skills, Projects, Contact
+- ✅ Tabbed projects showcase (4 projects)
+- ✅ Skills organized in 3 categories (Frontend, Backend, Tools)
+- ✅ Personal interests popup overlay
+- ✅ Resume download functionality
+- ✅ Contact form with social links
+- ✅ Responsive hamburger navigation menu
+- ✅ No scrolling required (except Contact page)
+- ✅ Modern gradient backgrounds and animations
+- ✅ Fully responsive design
+
+**Technical Stack**:
+- Vue 3 + TypeScript
+- Vite build tool
+- CSS3 with custom animations
+- No external UI libraries (custom components)
 
 ## Resources
 
-- [Netlify Documentation](https://docs.netlify.com/)
-- [Formspree Documentation](https://help.formspree.io/)
-- [Vite Documentation](https://vitejs.dev/)
-- [Vue.js Documentation](https://vuejs.org/)
+- [Netlify Documentation](https:
+- [Formspree Documentation](https:
+- [Vite Documentation](https:
+- [Vue.js Documentation](https:
 
 ---
 

@@ -10,7 +10,7 @@ import Contact from './components/Contact.vue'
 
 const showInterests = ref(false)
 const activeCard = ref(0)
-const transitionProgress = ref(0) // 0 to 1 during transition
+const transitionProgress = ref(0)
 const isTransitioning = ref(false)
 
 const pages = [
@@ -38,18 +38,15 @@ const navigateToPage = (pageName: string) => {
   showInterests.value = false
 }
 
-// Get card style based on transition progress
 const getCardStyle = (index: number) => {
   const current = activeCard.value
   const progress = transitionProgress.value
   
-  // Card is far in the past
   if (index < current) {
     return {
       display: 'none'
     }
   }
-  // Current card shrinking
   else if (index === current && progress > 0) {
     const shrink = progress
     return {
@@ -63,7 +60,6 @@ const getCardStyle = (index: number) => {
       zIndex: 99
     }
   }
-  // Active stable card
   else if (index === current) {
     return {
       top: '0',
@@ -76,7 +72,6 @@ const getCardStyle = (index: number) => {
       zIndex: 100
     }
   }
-  // Next card growing
   else if (index === current + 1 && progress > 0) {
     const grow = progress
     return {
@@ -90,7 +85,6 @@ const getCardStyle = (index: number) => {
       zIndex: 101
     }
   }
-  // Future cards hidden
   else {
     return {
       display: 'none'
@@ -99,13 +93,12 @@ const getCardStyle = (index: number) => {
 }
 
 let scrollAccumulator = 0
-const SCROLL_THRESHOLD = 500 // Adjusted to 500px for 4-5 scrolls
-let isLocked = ref(false) // Lock scrolling during pause
+const SCROLL_THRESHOLD = 500
+let isLocked = ref(false)
 
 const handleWheel = (e: WheelEvent) => {
   if (showInterests.value || isLocked.value) return
   
-  // Only check internal scroll for Contact page (last page)
   if (activeCard.value === pages.length - 1) {
     const activePageCard = document.querySelector('.page-card.active .page-card-content')
     if (activePageCard && !isTransitioning.value) {
@@ -124,10 +117,8 @@ const handleWheel = (e: WheelEvent) => {
   
   e.preventDefault()
   
-  // Accumulate scroll
   scrollAccumulator += e.deltaY
   
-  // Forward scroll
   if (scrollAccumulator > 0 && activeCard.value < pages.length - 1) {
     isTransitioning.value = true
     const progress = Math.min(scrollAccumulator / SCROLL_THRESHOLD, 1)
@@ -139,14 +130,12 @@ const handleWheel = (e: WheelEvent) => {
       transitionProgress.value = 0
       isTransitioning.value = false
       
-      // Lock for 1 second after reaching full rectangle
       isLocked.value = true
       setTimeout(() => {
         isLocked.value = false
       }, 1000)
     }
   }
-  // Backward scroll
   else if (scrollAccumulator < 0 && activeCard.value > 0) {
     isTransitioning.value = true
     const progress = Math.min(Math.abs(scrollAccumulator) / SCROLL_THRESHOLD, 1)
@@ -158,7 +147,6 @@ const handleWheel = (e: WheelEvent) => {
       transitionProgress.value = 0
       isTransitioning.value = false
       
-      // Lock for 1 second after reaching full rectangle
       isLocked.value = true
       setTimeout(() => {
         isLocked.value = false
@@ -256,7 +244,6 @@ provide('activeCard', activeCard)
   background: rgba(90, 140, 140, 0.5);
 }
 
-/* Each Page Card */
 .page-card {
   position: fixed;
   background: linear-gradient(135deg, rgba(25, 30, 45, 0.98), rgba(15, 20, 35, 0.98));
@@ -279,7 +266,6 @@ provide('activeCard', activeCard)
   border: none;
 }
 
-/* Page Card Header */
 .page-card-header {
   position: sticky;
   top: 0;
@@ -312,7 +298,6 @@ provide('activeCard', activeCard)
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Page Card Content */
 .page-card-content {
   width: 100%;
   padding: 0;
@@ -322,7 +307,6 @@ provide('activeCard', activeCard)
   max-height: calc(100vh - 60px);
 }
 
-/* Only Contact page should have scrolling */
 .page-card:has(.contact) .page-card-content {
   overflow-y: auto;
 }

@@ -33,7 +33,6 @@ const handleNavClick = (e: Event, page: string) => {
 
 <template>
   <nav class="navbar">
-    <!-- Hamburger Menu Button -->
     <button 
       class="hamburger-btn" 
       :class="{ active: isSidebarOpen }"
@@ -45,12 +44,9 @@ const handleNavClick = (e: Event, page: string) => {
       <span></span>
     </button>
 
-    <!-- Sidebar Navigation -->
     <div class="sidebar" :class="{ open: isSidebarOpen }">
-      <!-- Navigation Label -->
       <div class="nav-label">Navigation</div>
 
-      <!-- Navigation Links -->
       <div class="nav-links">
         <a href="#home" :class="{ active: currentPage === 'home' }" @click="(e) => handleNavClick(e, 'home')">Home</a>
         <a href="#about" :class="{ active: currentPage === 'about' }" @click="(e) => handleNavClick(e, 'about')">About</a>
@@ -60,7 +56,6 @@ const handleNavClick = (e: Event, page: string) => {
       </div>
     </div>
 
-    <!-- Overlay -->
     <div class="overlay" :class="{ show: isSidebarOpen }" @click="closeSidebar"></div>
   </nav>
 </template>
@@ -75,7 +70,6 @@ const handleNavClick = (e: Event, page: string) => {
   pointer-events: none;
 }
 
-/* Hamburger Button */
 .hamburger-btn {
   position: fixed;
   top: 20px;
@@ -121,7 +115,6 @@ const handleNavClick = (e: Event, page: string) => {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
@@ -145,12 +138,10 @@ const handleNavClick = (e: Event, page: string) => {
   right: 0;
 }
 
-/* Close Button */
 .close-btn {
   display: none;
 }
 
-/* Navigation Label */
 .nav-label {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
@@ -161,7 +152,6 @@ const handleNavClick = (e: Event, page: string) => {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Navigation Links */
 .nav-links {
   display: flex;
   flex-direction: column;
@@ -200,7 +190,6 @@ const handleNavClick = (e: Event, page: string) => {
   width: 60px;
 }
 
-/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -221,7 +210,6 @@ const handleNavClick = (e: Event, page: string) => {
   pointer-events: all;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .hamburger-btn {
     top: 20px;
