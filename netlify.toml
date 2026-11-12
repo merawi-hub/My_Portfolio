@@ -9,7 +9,7 @@
   
   # Environment variables for build
   [build.environment]
-    NODE_VERSION = "18"
+    NODE_VERSION = "22.22.2"
 
 # SPA redirect rule
 # This ensures Vue Router works correctly
