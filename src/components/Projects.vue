@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Project {
   id: number
@@ -49,15 +49,13 @@ const allProjects = ref<Project[]>([
 
 const activeProjectIndex = ref(0)
 
-const setActiveProject = (index: number) => {
-  activeProjectIndex.value = index
-}
-
-const activeProject = ref(allProjects.value[activeProjectIndex.value])
+const activeProject = computed<Project>(() => {
+  const project = allProjects.value[activeProjectIndex.value]
+  return project ?? allProjects.value[0]!
+})
 
 const updateActiveProject = (index: number) => {
   activeProjectIndex.value = index
-  activeProject.value = allProjects.value[index]
 }
 </script>
 
@@ -83,11 +81,11 @@ const updateActiveProject = (index: number) => {
       <div class="project-showcase">
         <div class="project-card">
           <div class="card-header">
-            <h3 class="project-title">{{ allProjects[activeProjectIndex].title }}</h3>
+            <h3 class="project-title">{{ activeProject.title }}</h3>
             <div class="project-links">
               <a 
-                v-if="allProjects[activeProjectIndex].demo" 
-                :href="allProjects[activeProjectIndex].demo" 
+                v-if="activeProject.demo" 
+                :href="activeProject.demo" 
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link-btn demo"
@@ -95,8 +93,8 @@ const updateActiveProject = (index: number) => {
                 Demo
               </a>
               <a 
-                v-if="allProjects[activeProjectIndex].github" 
-                :href="allProjects[activeProjectIndex].github" 
+                v-if="activeProject.github" 
+                :href="activeProject.github" 
                 target="_blank"
                 rel="noopener noreferrer"
                 class="link-btn code"
@@ -108,17 +106,17 @@ const updateActiveProject = (index: number) => {
 
           <div class="project-image-wrapper">
             <img 
-              :src="allProjects[activeProjectIndex].image" 
-              :alt="allProjects[activeProjectIndex].title"
+              :src="activeProject.image" 
+              :alt="activeProject.title"
               class="project-image"
               @error="(e) => (e.target as HTMLImageElement).src = '/images/profile-placeholder.svg'"
             />
           </div>
 
           <div class="project-info">
-            <p class="project-description">{{ allProjects[activeProjectIndex].description }}</p>
+            <p class="project-description">{{ activeProject.description }}</p>
             <div class="project-tags">
-              <span v-for="tag in allProjects[activeProjectIndex].tags" :key="tag" class="tag">
+              <span v-for="tag in activeProject.tags" :key="tag" class="tag">
                 {{ tag }}
               </span>
             </div>
